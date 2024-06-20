@@ -254,7 +254,7 @@ public class MetaItemStack {
             if (stack.getType() == WRITTEN_BOOK) {
                 if (!meta.hasAuthor()) {
                     // The sender can be null when this method is called from {@link  com.earth2me.essentials.signs.EssentialsSign#getItemMeta(ItemStack, String, IEssentials)}
-                    meta.setAuthor(sender == null ? Console.getInstance().getDisplayName() : sender.getPlayer().getName());
+                    meta.setAuthor(sender == null ? Console.getInstance().getName() : sender.getPlayer().getName());
                 }
                 if (!meta.hasTitle()) {
                     final String title = FormatUtil.replaceFormat(split[1].replace('_', ' '));

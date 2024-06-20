@@ -27,7 +27,7 @@ public class Commandxmppspy extends EssentialsLoopCommand {
     @Override
     protected void updatePlayer(final Server server, final CommandSource sender, final User user, final String[] args) {
         try {
-            sender.sendMessage("XMPP Spy " + (EssentialsXMPP.getInstance().toggleSpy(user.getBase()) ? "enabled" : "disabled") + " for " + user.getDisplayName());
+            sender.sendMessage("XMPP Spy " + (EssentialsXMPP.getInstance().toggleSpy(user.getBase()) ? "enabled" : "disabled") + " for " + user.getName());
         } catch (final Exception ex) {
             sender.sendMessage("Error: " + ex.getMessage());
         }

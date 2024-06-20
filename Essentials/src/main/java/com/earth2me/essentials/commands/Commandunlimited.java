@@ -82,9 +82,9 @@ public class Commandunlimited extends EssentialsCommand {
         }
 
         if (user != target) {
-            user.sendTl(message, itemname, target.getDisplayName());
+            user.sendTl(message, itemname, target.getName());
         }
-        target.sendTl(message, itemname, target.getDisplayName());
+        target.sendTl(message, itemname, target.getName());
         target.setUnlimited(stack, enableUnlimited);
     }
 }

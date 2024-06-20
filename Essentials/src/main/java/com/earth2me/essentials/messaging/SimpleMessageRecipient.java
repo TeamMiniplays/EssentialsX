@@ -79,7 +79,7 @@ public class SimpleMessageRecipient implements IMessageRecipient {
 
     @Override
     public String getDisplayName() {
-        return this.parent.getDisplayName();
+        return this.parent.getName();
     }
 
     @Override
@@ -94,10 +94,10 @@ public class SimpleMessageRecipient implements IMessageRecipient {
         final MessageResponse messageResponse = recipient.onReceiveMessage(this.parent, message);
         switch (messageResponse) {
             case UNREACHABLE:
-                sendTl("recentlyForeverAlone", recipient.getDisplayName());
+                sendTl("recentlyForeverAlone", recipient.getName());
                 break;
             case MESSAGES_IGNORED:
-                sendTl("msgIgnore", recipient.getDisplayName());
+                sendTl("msgIgnore", recipient.getName());
                 break;
             case SENDER_IGNORED:
                 break;
@@ -105,13 +105,13 @@ public class SimpleMessageRecipient implements IMessageRecipient {
             case SUCCESS_BUT_AFK:
                 // Currently, only IUser can be afk, so we unsafely cast to get the afk message.
                 if (((IUser) recipient).getAfkMessage() != null) {
-                    sendTl("userAFKWithMessage", recipient.getDisplayName(), ((IUser) recipient).getAfkMessage());
+                    sendTl("userAFKWithMessage", recipient.getName(), ((IUser) recipient).getAfkMessage());
                 } else {
-                    sendTl("userAFK", recipient.getDisplayName());
+                    sendTl("userAFK", recipient.getName());
                 }
                 // fall through
             default:
-                sendTl("msgFormat", AdventureUtil.parsed(tlSender("meSender")), recipient.getDisplayName(), message);
+                sendTl("msgFormat", AdventureUtil.parsed(tlSender("meSender")), recipient.getName(), message);
 
                 // Better Social Spy
                 if (ess.getSettings().isSocialSpyMessages()) {
@@ -121,8 +121,8 @@ public class SimpleMessageRecipient implements IMessageRecipient {
                             // Dont spy on chats involving socialspy exempt players
                             && !senderUser.isAuthorized("essentials.chat.spy.exempt")
                             && recipientUser != null && !recipientUser.isAuthorized("essentials.chat.spy.exempt")) {
-                        final String senderName = ess.getSettings().isSocialSpyDisplayNames() ? getDisplayName() : getName();
-                        final String recipientName = ess.getSettings().isSocialSpyDisplayNames() ? recipient.getDisplayName() : recipient.getName();
+                        final String senderName = ess.getSettings().isSocialSpyDisplayNames() ? getName() : getName();
+                        final String recipientName = ess.getSettings().isSocialSpyDisplayNames() ? recipient.getName() : recipient.getName();
                         for (final User onlineUser : ess.getOnlineUsers()) {
                             if (onlineUser.isSocialSpyEnabled()
                                     // Don't send socialspy messages to message sender/receiver to prevent spam
@@ -171,7 +171,7 @@ public class SimpleMessageRecipient implements IMessageRecipient {
             }
         }
         // Display the formatted message to this recipient.
-        sendTl("msgFormat", sender.getDisplayName(), AdventureUtil.parsed(tlSender("meRecipient")), message);
+        sendTl("msgFormat", sender.getName(), AdventureUtil.parsed(tlSender("meRecipient")), message);
 
         if (isLastMessageReplyRecipient) {
             // If this recipient doesn't have a reply recipient, initiate by setting the first

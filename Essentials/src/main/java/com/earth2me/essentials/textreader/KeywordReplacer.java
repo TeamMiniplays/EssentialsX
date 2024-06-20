@@ -194,7 +194,7 @@ public class KeywordReplacer implements IText {
                     case PLAYER:
                     case DISPLAYNAME:
                         if (user != null) {
-                            replacer = user.getDisplayName();
+                            replacer = user.getName();
                         }
                         break;
                     case USERNAME:

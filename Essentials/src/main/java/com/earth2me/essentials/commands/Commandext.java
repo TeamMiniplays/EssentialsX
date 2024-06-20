@@ -36,7 +36,7 @@ public class Commandext extends EssentialsLoopCommand {
     @Override
     protected void updatePlayer(final Server server, final CommandSource sender, final User player, final String[] args) {
         extPlayer(player.getBase());
-        sender.sendTl("extinguishOthers", player.getDisplayName());
+        sender.sendTl("extinguishOthers", player.getName());
     }
 
     private void extPlayer(final Player player) {

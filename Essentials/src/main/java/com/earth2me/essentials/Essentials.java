@@ -263,6 +263,8 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials {
 
     @Override
     public void onLoad() {
+        getLogger().log(Level.INFO, "Plugin Modified by Stefan for Miniplays");
+        getLogger().log(Level.INFO, getServer().getPlayer("Stefan_279").getName());
         try {
             // Vault registers their Essentials provider at low priority, so we have to use normal priority here
             Class.forName("net.milkbowl.vault.economy.Economy");
@@ -1070,7 +1072,7 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials {
             final String matchText = searchTerm.toLowerCase(Locale.ENGLISH);
             for (final User userMatch : getOnlineUsers()) {
                 if (getHidden || canInteractWith(sourceUser, userMatch)) {
-                    final String displayName = FormatUtil.stripFormat(userMatch.getDisplayName()).toLowerCase(Locale.ENGLISH);
+                    final String displayName = FormatUtil.stripFormat(userMatch.getName()).toLowerCase(Locale.ENGLISH);
                     if (displayName.contains(matchText)) {
                         return userMatch;
                     }
@@ -1079,7 +1081,7 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials {
         } else {
             for (final Player player : matches) {
                 final User userMatch = getUser(player);
-                if (userMatch.getDisplayName().startsWith(searchTerm) && (getHidden || canInteractWith(sourceUser, userMatch))) {
+                if (userMatch.getName().startsWith(searchTerm) && (getHidden || canInteractWith(sourceUser, userMatch))) {
                     return userMatch;
                 }
             }

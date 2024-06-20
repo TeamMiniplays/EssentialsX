@@ -249,7 +249,7 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
         setMoney(getMoney().add(value), cause);
         sendTl("addedToAccount", NumberUtil.displayCurrency(value, ess));
         if (initiator != null) {
-            initiator.sendTl("addedToOthersAccount", NumberUtil.displayCurrency(value, ess), getDisplayName(), NumberUtil.displayCurrency(getMoney(), ess));
+            initiator.sendTl("addedToOthersAccount", NumberUtil.displayCurrency(value, ess), getName(), NumberUtil.displayCurrency(getMoney(), ess));
         }
     }
 
@@ -266,8 +266,8 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
         if (canAfford(value)) {
             setMoney(getMoney().subtract(value), cause);
             reciever.setMoney(reciever.getMoney().add(value), cause);
-            sendTl("moneySentTo", NumberUtil.displayCurrency(value, ess), reciever.getDisplayName());
-            reciever.sendTl("moneyRecievedFrom", NumberUtil.displayCurrency(value, ess), getDisplayName());
+            sendTl("moneySentTo", NumberUtil.displayCurrency(value, ess), reciever.getName());
+            reciever.sendTl("moneyRecievedFrom", NumberUtil.displayCurrency(value, ess), getName());
             final TransactionEvent transactionEvent = new TransactionEvent(this.getSource(), reciever, value);
             ess.getServer().getPluginManager().callEvent(transactionEvent);
         } else {
@@ -296,7 +296,7 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
         }
         sendTl("takenFromAccount", NumberUtil.displayCurrency(value, ess));
         if (initiator != null) {
-            initiator.sendTl("takenFromOthersAccount", NumberUtil.displayCurrency(value, ess), getDisplayName(), NumberUtil.displayCurrency(getMoney(), ess));
+            initiator.sendTl("takenFromOthersAccount", NumberUtil.displayCurrency(value, ess), getName(), NumberUtil.displayCurrency(getMoney(), ess));
         }
     }
 
@@ -408,7 +408,7 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
         }
         teleportRequestQueue.remove(playerUsername);
         if (inform) {
-            sendTl("requestTimedOutFrom", ess.getUser(request.getRequesterUuid()).getDisplayName());
+            sendTl("requestTimedOutFrom", ess.getUser(request.getRequesterUuid()).getName());
         }
         return null;
     }
@@ -442,7 +442,7 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
                 }
             } else {
                 if (inform) {
-                    sendTl("requestTimedOutFrom", ess.getUser(request.getRequesterUuid()).getDisplayName());
+                    sendTl("requestTimedOutFrom", ess.getUser(request.getRequesterUuid()).getName());
                 }
                 teleportRequestQueue.remove(key);
             }
@@ -675,7 +675,7 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
     private void updateAfkListName() {
         if (ess.getSettings().isAfkListName()) {
             if (isAfk()) {
-                final String afkName = ess.getSettings().getAfkListName().replace("{PLAYER}", getDisplayName()).replace("{USERNAME}", getName());
+                final String afkName = ess.getSettings().getAfkListName().replace("{PLAYER}", getName()).replace("{USERNAME}", getName());
                 getBase().setPlayerListName(afkName);
             } else {
                 getBase().setPlayerListName(null);
@@ -805,9 +805,9 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
             if (broadcast && !isHidden() && !isAfk()) {
                 setDisplayNick();
                 if (ess.getSettings().broadcastAfkMessage()) {
-                    ess.broadcastTl(this, u -> u == this, "userIsNotAway", getDisplayName());
+                    ess.broadcastTl(this, u -> u == this, "userIsNotAway", getName());
                 }
-                sendTl("userIsNotAwaySelf", getDisplayName());
+                sendTl("userIsNotAwaySelf", getName());
             }
         }
         lastActivity = System.currentTimeMillis();
@@ -860,9 +860,9 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
             if (isAfk() && !isHidden()) {
                 setDisplayNick();
                 if (ess.getSettings().broadcastAfkMessage()) {
-                    ess.broadcastTl(this, u -> u == this, "userIsAway", getDisplayName());
+                    ess.broadcastTl(this, u -> u == this, "userIsAway", getName());
                 }
-                sendTl("userIsAwaySelf", getDisplayName());
+                sendTl("userIsAwaySelf", getName());
             }
         }
     }
@@ -1108,7 +1108,7 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
 
     @Override
     public int compareTo(final User other) {
-        return FormatUtil.stripFormat(getDisplayName()).compareToIgnoreCase(FormatUtil.stripFormat(other.getDisplayName()));
+        return FormatUtil.stripFormat(getName()).compareToIgnoreCase(FormatUtil.stripFormat(other.getName()));
     }
 
     @Override

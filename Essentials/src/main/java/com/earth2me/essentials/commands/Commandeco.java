@@ -65,7 +65,7 @@ public class Commandeco extends EssentialsLoopCommand {
                     final boolean aboveMax = userAmount.compareTo(maxBal) > 0;
                     player.setMoney(underMin ? minBal : aboveMax ? maxBal : userAmount, UserBalanceUpdateEvent.Cause.COMMAND_ECO);
                     player.sendTl("setBal", NumberUtil.displayCurrency(player.getMoney(), ess));
-                    sender.sendTl("setBalOthers", player.getDisplayName(), NumberUtil.displayCurrency(player.getMoney(), ess));
+                    sender.sendTl("setBalOthers", player.getName(), NumberUtil.displayCurrency(player.getMoney(), ess));
                     break;
                 }
             }

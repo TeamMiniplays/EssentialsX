@@ -30,7 +30,7 @@ public class Commandtoggleshout extends EssentialsToggleCommand {
 
         user.sendTl(enabled ? "shoutEnabled" : "shoutDisabled");
         if (!sender.isPlayer() || !user.getBase().equals(sender.getPlayer())) {
-            sender.sendTl(enabled ? "shoutEnabledFor" : "shoutDisabledFor", user.getDisplayName());
+            sender.sendTl(enabled ? "shoutEnabledFor" : "shoutDisabledFor", user.getName());
         }
     }
 }

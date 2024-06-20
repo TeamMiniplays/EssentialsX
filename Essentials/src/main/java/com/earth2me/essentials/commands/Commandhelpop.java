@@ -39,7 +39,7 @@ public class Commandhelpop extends EssentialsCommand {
         }
 
         final String message = FormatUtil.stripFormat(getFinalArg(args, 0));
-        ess.getLogger().log(Level.INFO, AdventureUtil.miniToLegacy(tlLiteral("helpOp", from.getDisplayName(), message)));
+        ess.getLogger().log(Level.INFO, AdventureUtil.miniToLegacy(tlLiteral("helpOp", from.getName(), message)));
 
         final List<IUser> recipients = new ArrayList<>();
         for (IUser user : ess.getOnlineUsers()) {
@@ -53,11 +53,11 @@ public class Commandhelpop extends EssentialsCommand {
 
         final IUser sender = (IUser) from;
         if(!recipients.contains(sender)){
-            from.sendTl("helpOp", from.getDisplayName(), message);
+            from.sendTl("helpOp", from.getName(), message);
         }
 
         for (IUser recipient : sendEvent.getRecipients()) {
-            recipient.sendTl("helpOp", from.getDisplayName(), message);
+            recipient.sendTl("helpOp", from.getName(), message);
         }
     }
 

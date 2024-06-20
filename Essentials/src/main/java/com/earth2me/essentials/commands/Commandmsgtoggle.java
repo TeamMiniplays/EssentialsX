@@ -29,7 +29,7 @@ public class Commandmsgtoggle extends EssentialsToggleCommand {
 
         user.sendTl(!enabled ? "msgEnabled" : "msgDisabled");
         if (!sender.isPlayer() || !user.getBase().equals(sender.getPlayer())) {
-            sender.sendTl(!enabled ? "msgEnabledFor" : "msgDisabledFor", user.getDisplayName());
+            sender.sendTl(!enabled ? "msgEnabledFor" : "msgDisabledFor", user.getName());
         }
     }
 }

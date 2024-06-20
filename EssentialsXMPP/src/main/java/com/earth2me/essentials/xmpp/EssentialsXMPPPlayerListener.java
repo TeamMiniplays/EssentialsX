@@ -26,13 +26,13 @@ class EssentialsXMPPPlayerListener implements Listener {
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(ess, EssentialsXMPP::updatePresence);
 
-        sendMessageToSpyUsers("Player " + user.getDisplayName() + " joined the game");
+        sendMessageToSpyUsers("Player " + user.getName() + " joined the game");
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerChat(final AsyncPlayerChatEvent event) {
         final User user = ess.getUser(event.getPlayer());
-        sendMessageToSpyUsers(String.format(event.getFormat(), user.getDisplayName(), event.getMessage()));
+        sendMessageToSpyUsers(String.format(event.getFormat(), user.getName(), event.getMessage()));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -41,7 +41,7 @@ class EssentialsXMPPPlayerListener implements Listener {
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(ess, EssentialsXMPP::updatePresence);
 
-        sendMessageToSpyUsers("Player " + user.getDisplayName() + " left the game");
+        sendMessageToSpyUsers("Player " + user.getName() + " left the game");
     }
 
     private void sendMessageToSpyUsers(final String message) {

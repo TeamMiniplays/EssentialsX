@@ -31,7 +31,7 @@ public class Commandspawn extends EssentialsCommand {
             future.thenAccept(success -> {
                 if (success) {
                     if (!otherUser.equals(user)) {
-                        otherUser.sendTl("teleportAtoB", user.getDisplayName(), "spawn");
+                        otherUser.sendTl("teleportAtoB", user.getName(), "spawn");
                     }
                 }
             });

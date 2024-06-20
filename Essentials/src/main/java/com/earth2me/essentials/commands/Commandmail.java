@@ -100,7 +100,7 @@ public class Commandmail extends EssentialsCommand {
                 u.sendMail(user, msg);
             }
 
-            user.sendTl("mailSentTo", u.getDisplayName(), u.getName());
+            user.sendTl("mailSentTo", u.getName(), u.getName());
             user.sendMessage(msg);
             return;
         }
@@ -143,7 +143,7 @@ public class Commandmail extends EssentialsCommand {
                 u.sendMail(user, msg, dateDiff);
             }
 
-            user.sendTl("mailSentToExpire", u.getDisplayName(), DateUtil.formatDateDiff(dateDiff), u.getName());
+            user.sendTl("mailSentToExpire", u.getName(), DateUtil.formatDateDiff(dateDiff), u.getName());
             user.sendMessage(msg);
             return;
         }
@@ -185,7 +185,7 @@ public class Commandmail extends EssentialsCommand {
 
             final ArrayList<MailMessage> mails = mailUser.getMailMessages();
             if (mails == null || mails.isEmpty()) {
-                user.sendTl(mailUser == user ? "noMail" : "noMailOther", mailUser.getDisplayName());
+                user.sendTl(mailUser == user ? "noMail" : "noMailOther", mailUser.getName());
                 throw new NoChargeException();
             }
 
@@ -225,7 +225,7 @@ public class Commandmail extends EssentialsCommand {
 
             final ArrayList<MailMessage> mails = mailUser.getMailMessages();
             if (mails == null || mails.isEmpty()) {
-                sender.sendTl("noMailOther", mailUser.getDisplayName());
+                sender.sendTl("noMailOther", mailUser.getName());
                 throw new NoChargeException();
             }
 

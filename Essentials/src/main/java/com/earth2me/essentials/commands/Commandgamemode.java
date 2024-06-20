@@ -60,7 +60,7 @@ public class Commandgamemode extends EssentialsLoopCommand {
         }
 
         user.getBase().setGameMode(gameMode);
-        user.sendTl("gameMode", user.playerTl(user.getBase().getGameMode().toString().toLowerCase(Locale.ENGLISH)), user.getDisplayName());
+        user.sendTl("gameMode", user.playerTl(user.getBase().getGameMode().toString().toLowerCase(Locale.ENGLISH)), user.getName());
     }
 
     private void setUserGamemode(final CommandSource sender, final GameMode gameMode, final User user) throws NotEnoughArgumentsException {
@@ -74,7 +74,7 @@ public class Commandgamemode extends EssentialsLoopCommand {
         }
 
         user.getBase().setGameMode(gameMode);
-        sender.sendTl("gameMode", sender.tl(gameMode.toString().toLowerCase(Locale.ENGLISH)), user.getDisplayName());
+        sender.sendTl("gameMode", sender.tl(gameMode.toString().toLowerCase(Locale.ENGLISH)), user.getName());
     }
 
     // essentials.gamemode will let them change to any but essentials.gamemode.survival would only let them change to survival.

@@ -33,7 +33,7 @@ public class Commandlightning extends EssentialsLoopCommand {
         }
         final int finalPower = power;
         loopOnlinePlayersConsumer(server, sender, false, true, args[0], player -> {
-            sender.sendTl("lightningUse", player.getDisplayName());
+            sender.sendTl("lightningUse", player.getName());
             final LightningStrike strike = player.getBase().getWorld().strikeLightningEffect(player.getBase().getLocation());
 
             if (!player.isGodModeEnabled()) {

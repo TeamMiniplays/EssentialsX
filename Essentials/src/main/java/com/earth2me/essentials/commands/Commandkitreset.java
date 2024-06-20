@@ -34,7 +34,7 @@ public class Commandkitreset extends EssentialsCommand {
         if (user.equals(target)) {
             user.sendTl("kitReset", kitName);
         } else {
-            user.sendTl("kitResetOther", kitName, target.getDisplayName());
+            user.sendTl("kitResetOther", kitName, target.getName());
         }
     }
 
@@ -51,7 +51,7 @@ public class Commandkitreset extends EssentialsCommand {
 
         final User target = getPlayer(server, sender, args, 1);
         target.setKitTimestamp(kitName, 0);
-        sender.sendTl("kitResetOther", kitName, target.getDisplayName());
+        sender.sendTl("kitResetOther", kitName, target.getName());
     }
 
     @Override

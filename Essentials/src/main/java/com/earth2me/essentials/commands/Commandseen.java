@@ -91,7 +91,7 @@ public class Commandseen extends EssentialsCommand {
 
     private void showSeenMessage(final CommandSource sender, final User player, final boolean searchAccounts, final boolean showBan, final boolean showIp, final boolean showLocation, final boolean showWhitelist) {
         if (searchAccounts) {
-            seenIP(sender, player.getLastLoginAddress(), player.getDisplayName());
+            seenIP(sender, player.getLastLoginAddress(), player.getName());
         } else if (player.getBase().isOnline() && canInteractWith(sender, player)) {
             seenOnline(sender, player, showIp);
         } else {
@@ -102,7 +102,7 @@ public class Commandseen extends EssentialsCommand {
     private void seenOnline(final CommandSource sender, final User user, final boolean showIp) {
 
         user.setDisplayNick();
-        sender.sendTl("seenOnline", user.getDisplayName(), DateUtil.formatDateDiff(user.getLastLogin()));
+        sender.sendTl("seenOnline", user.getName(), DateUtil.formatDateDiff(user.getLastLogin()));
 
         final List<String> history = user.getPastUsernames();
         if (history != null && !history.isEmpty()) {

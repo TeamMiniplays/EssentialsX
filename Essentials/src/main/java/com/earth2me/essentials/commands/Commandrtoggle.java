@@ -29,7 +29,7 @@ public class Commandrtoggle extends EssentialsToggleCommand {
 
         user.sendTl(!enabled ? "replyLastRecipientDisabled" : "replyLastRecipientEnabled");
         if (!sender.isPlayer() || !user.getBase().equals(sender.getPlayer())) {
-            sender.sendTl(!enabled ? "replyLastRecipientDisabledFor" : "replyLastRecipientEnabledFor", user.getDisplayName());
+            sender.sendTl(!enabled ? "replyLastRecipientDisabledFor" : "replyLastRecipientEnabledFor", user.getName());
         }
     }
 }

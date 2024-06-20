@@ -38,9 +38,9 @@ public class Commandfly extends EssentialsToggleCommand {
                 user.getBase().setFlying(false);
             }
 
-            user.sendTl("flyMode", CommonPlaceholders.enableDisable(user.getSource(), enabled), user.getDisplayName());
+            user.sendTl("flyMode", CommonPlaceholders.enableDisable(user.getSource(), enabled), user.getName());
             if (!sender.isPlayer() || !sender.getPlayer().equals(user.getBase())) {
-                sender.sendTl("flyMode", CommonPlaceholders.enableDisable(user.getSource(), enabled), user.getDisplayName());
+                sender.sendTl("flyMode", CommonPlaceholders.enableDisable(user.getSource(), enabled), user.getName());
             }
         }
     }

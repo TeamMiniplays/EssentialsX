@@ -97,7 +97,7 @@ public abstract class AbstractChatHandler {
         format = format.replace("{2}", world.substring(0, 1).toUpperCase(Locale.ENGLISH));
         format = format.replace("{3}", team == null ? "" : team.getPrefix());
         format = format.replace("{4}", team == null ? "" : team.getSuffix());
-        format = format.replace("{5}", team == null ? "" : team.getDisplayName());
+        format = format.replace("{5}", team == null ? "" : team.getName());
         format = format.replace("{6}", prefix);
         format = format.replace("{7}", suffix);
         format = format.replace("{8}", username);
@@ -227,7 +227,7 @@ public abstract class AbstractChatHandler {
         server.getPluginManager().callEvent(spyEvent);
 
         if (!spyEvent.isCancelled()) {
-            final String legacyString = AdventureUtil.miniToLegacy(String.format(spyEvent.getFormat(), AdventureUtil.legacyToMini(user.getDisplayName()), AdventureUtil.escapeTags(spyEvent.getMessage())));
+            final String legacyString = AdventureUtil.miniToLegacy(String.format(spyEvent.getFormat(), AdventureUtil.legacyToMini(user.getName()), AdventureUtil.escapeTags(spyEvent.getMessage())));
 
             for (final Player onlinePlayer : spyEvent.getRecipients()) {
                 onlinePlayer.sendMessage(legacyString);

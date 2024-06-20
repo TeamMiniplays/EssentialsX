@@ -39,7 +39,7 @@ public final class PlayerList {
                 groupString.append(tlLiteral("listHiddenTag"));
             }
             user.setDisplayNick();
-            groupString.append(AdventureUtil.legacyToMini(user.getDisplayName()));
+            groupString.append(AdventureUtil.legacyToMini(user.getName()));
 
             final String strippedNick = FormatUtil.stripFormat(user.getNickname());
             if (ess.getSettings().realNamesOnList() && strippedNick != null && !strippedNick.equals(user.getName())) {

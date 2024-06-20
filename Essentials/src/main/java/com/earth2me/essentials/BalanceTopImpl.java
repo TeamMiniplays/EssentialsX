@@ -45,7 +45,7 @@ public class BalanceTopImpl implements BalanceTop {
                     } else if (user.isHidden()) {
                         name = user.getName();
                     } else {
-                        name = user.getDisplayName();
+                        name = user.getName();
                     }
                     entries.add(new BalanceTop.Entry(user.getUUID(), name, userMoney));
                 }

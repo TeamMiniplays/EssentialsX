@@ -38,7 +38,7 @@ public class Commandice extends EssentialsLoopCommand {
     @Override
     protected void updatePlayer(Server server, CommandSource sender, User user, String[] args) throws NotEnoughArgumentsException, PlayerExemptException, ChargeException, MaxMoneyException {
         freezePlayer(user);
-        sender.sendTl("iceOther", user.getDisplayName());
+        sender.sendTl("iceOther", user.getName());
     }
 
     private void freezePlayer(final IUser user) {

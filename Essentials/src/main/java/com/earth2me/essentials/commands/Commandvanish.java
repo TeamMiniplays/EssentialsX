@@ -34,13 +34,13 @@ public class Commandvanish extends EssentialsToggleCommand {
         }
 
         user.setVanished(enabled);
-        user.sendTl("vanish", user.getDisplayName(), CommonPlaceholders.enableDisable(user.getSource(), enabled));
+        user.sendTl("vanish", user.getName(), CommonPlaceholders.enableDisable(user.getSource(), enabled));
 
         if (enabled) {
             user.sendTl("vanished");
         }
         if (!sender.isPlayer() || !sender.getPlayer().equals(user.getBase())) {
-            sender.sendTl("vanish", user.getDisplayName(), CommonPlaceholders.enableDisable(user.getSource(), enabled));
+            sender.sendTl("vanish", user.getName(), CommonPlaceholders.enableDisable(user.getSource(), enabled));
         }
     }
 }

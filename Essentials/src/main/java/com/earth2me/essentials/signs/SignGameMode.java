@@ -38,7 +38,7 @@ public class SignGameMode extends EssentialsSign {
         charge.isAffordableFor(player);
 
         performSetMode(mode.toLowerCase(Locale.ENGLISH), player.getBase());
-        player.sendTl("gameMode", player.playerTl(player.getBase().getGameMode().toString().toLowerCase(Locale.ENGLISH)), player.getDisplayName());
+        player.sendTl("gameMode", player.playerTl(player.getBase().getGameMode().toString().toLowerCase(Locale.ENGLISH)), player.getName());
         Trade.log("Sign", "gameMode", "Interact", username, null, username, charge, sign.getBlock().getLocation(), player.getMoney(), ess);
         charge.charge(player);
         return true;

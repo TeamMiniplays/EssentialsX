@@ -29,7 +29,7 @@ public class Commandtptoggle extends EssentialsToggleCommand {
 
         user.sendTl(enabled ? "teleportationEnabled" : "teleportationDisabled");
         if (!sender.isPlayer() || !user.getBase().equals(sender.getPlayer())) {
-            sender.sendTl(enabled ? "teleportationEnabledFor" : "teleportationDisabledFor", user.getDisplayName());
+            sender.sendTl(enabled ? "teleportationEnabledFor" : "teleportationDisabledFor", user.getName());
         }
     }
 }

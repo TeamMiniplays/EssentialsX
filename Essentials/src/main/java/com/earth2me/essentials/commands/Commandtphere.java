@@ -18,7 +18,7 @@ public class Commandtphere extends EssentialsCommand {
     public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception {
         final User player = getPlayer(server, user, args, 0);
         if (!player.isTeleportEnabled()) {
-            throw new TranslatableException("teleportDisabled", player.getDisplayName());
+            throw new TranslatableException("teleportDisabled", player.getName());
         }
         if (user.getWorld() != player.getWorld() && ess.getSettings().isWorldTeleportPermissions() && !user.isAuthorized("essentials.worlds." + user.getWorld().getName())) {
             throw new TranslatableException("noPerm", "essentials.worlds." + user.getWorld().getName());

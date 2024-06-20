@@ -65,7 +65,7 @@ public class Commandrenamehome extends EssentialsCommand {
         Bukkit.getServer().getPluginManager().callEvent(event);
         if (event.isCancelled()) {
             if (ess.getSettings().isDebug()) {
-                ess.getLogger().info("HomeModifyEvent canceled for /renamehome execution by " + user.getDisplayName());
+                ess.getLogger().info("HomeModifyEvent canceled for /renamehome execution by " + user.getName());
             }
             return;
         }

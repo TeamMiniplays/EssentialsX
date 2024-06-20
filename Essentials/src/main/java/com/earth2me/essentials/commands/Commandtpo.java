@@ -43,7 +43,7 @@ public class Commandtpo extends EssentialsCommand {
                 target.getAsyncTeleport().now(toPlayer.getBase(), false, TeleportCause.COMMAND, future);
                 future.thenAccept(success -> {
                     if (success) {
-                        target.sendTl("teleportAtoB", user.getDisplayName(), toPlayer.getDisplayName());
+                        target.sendTl("teleportAtoB", user.getName(), toPlayer.getName());
                     }
                 });
                 break;

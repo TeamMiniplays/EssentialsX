@@ -76,7 +76,7 @@ public class Commandsell extends EssentialsCommand {
             final List<String> names = new ArrayList<>();
             for (final ItemStack stack : notSold) {
                 if (stack.getItemMeta() != null) { //This was already validated but IDE still freaks out
-                    names.add(stack.getItemMeta().getDisplayName());
+                    names.add(stack.getItemMeta().getName());
                 }
             }
             ess.showError(user.getSource(), new TranslatableException("cannotSellTheseNamedItems", String.join(ChatColor.RESET + ", ", names)), commandLabel);
@@ -122,7 +122,7 @@ public class Commandsell extends EssentialsCommand {
         final String typeName = is.getType().toString().toLowerCase(Locale.ENGLISH);
         final String worthDisplay = NumberUtil.displayCurrency(worth, ess);
         user.sendTl("itemSold", NumberUtil.displayCurrency(result, ess), amount, typeName, worthDisplay);
-        ess.getLogger().log(Level.INFO, AdventureUtil.miniToLegacy(tlLiteral("itemSoldConsole", user.getName(), typeName, NumberUtil.displayCurrency(result, ess), amount, worthDisplay, user.getDisplayName())));
+        ess.getLogger().log(Level.INFO, AdventureUtil.miniToLegacy(tlLiteral("itemSoldConsole", user.getName(), typeName, NumberUtil.displayCurrency(result, ess), amount, worthDisplay, user.getName())));
         return result;
     }
 

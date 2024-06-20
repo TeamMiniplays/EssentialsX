@@ -95,10 +95,10 @@ public class Commandafk extends EssentialsCommand {
         }
         if (!tlKey.isEmpty() && ess.getSettings().broadcastAfkMessage()) {
             // exclude user from receiving general AFK announcement in favor of personal message
-            ess.broadcastTl(user, u -> u == user, tlKey, user.getDisplayName(), message);
+            ess.broadcastTl(user, u -> u == user, tlKey, user.getName(), message);
         }
         if (!selfTlKey.isEmpty()) {
-            user.sendTl(selfTlKey, user.getDisplayName(), message);
+            user.sendTl(selfTlKey, user.getName(), message);
         }
         user.setDisplayNick(); // Set this again after toggling
     }

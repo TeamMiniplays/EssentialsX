@@ -49,15 +49,15 @@ public class Commandnick extends EssentialsLoopCommand {
             target.sendTl("nickNoMore");
         } else if (target.getName().equalsIgnoreCase(nick)) {
             setNickname(server, sender, target, nick);
-            if (!target.getDisplayName().equalsIgnoreCase(target.getDisplayName())) {
+            if (!target.getName().equalsIgnoreCase(target.getName())) {
                 target.sendTl("nickNoMore");
             }
-            target.sendTl("nickSet", ess.getSettings().changeDisplayName() ? target.getDisplayName() : nick);
+            target.sendTl("nickSet", ess.getSettings().changeDisplayName() ? target.getName() : nick);
         } else if (nickInUse(target, nick)) {
             throw new NotEnoughArgumentsException(sender.tl("nickInUse"));
         } else {
             setNickname(server, sender, target, nick);
-            target.sendTl("nickSet", ess.getSettings().changeDisplayName() ? target.getDisplayName() : nick);
+            target.sendTl("nickSet", ess.getSettings().changeDisplayName() ? target.getName() : nick);
         }
     }
 

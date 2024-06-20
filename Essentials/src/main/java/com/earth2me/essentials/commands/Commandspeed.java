@@ -53,11 +53,11 @@ public class Commandspeed extends EssentialsCommand {
 
         if (isFly) {
             user.getBase().setFlySpeed(getRealMoveSpeed(speed, true, isBypass));
-            user.sendTl("moveSpeed", AdventureUtil.parsed(user.playerTl("flying")), speed, user.getDisplayName());
+            user.sendTl("moveSpeed", AdventureUtil.parsed(user.playerTl("flying")), speed, user.getName());
             return;
         }
         user.getBase().setWalkSpeed(getRealMoveSpeed(speed, false, isBypass));
-        user.sendTl("moveSpeed", AdventureUtil.parsed(user.playerTl("walking")), speed, user.getDisplayName());
+        user.sendTl("moveSpeed", AdventureUtil.parsed(user.playerTl("walking")), speed, user.getName());
     }
 
     private void speedOtherPlayers(final Server server, final CommandSource sender, final boolean isFly, final boolean isBypass, final float speed, final String name) throws PlayerNotFoundException {
@@ -72,10 +72,10 @@ public class Commandspeed extends EssentialsCommand {
             foundUser = true;
             if (isFly) {
                 matchPlayer.setFlySpeed(getRealMoveSpeed(speed, true, isBypass));
-                sender.sendTl("moveSpeed", AdventureUtil.parsed(sender.tl("flying")), speed, matchPlayer.getDisplayName());
+                sender.sendTl("moveSpeed", AdventureUtil.parsed(sender.tl("flying")), speed, matchPlayer.getName());
             } else {
                 matchPlayer.setWalkSpeed(getRealMoveSpeed(speed, false, isBypass));
-                sender.sendTl("moveSpeed", AdventureUtil.parsed(sender.tl("walking")), speed, matchPlayer.getDisplayName());
+                sender.sendTl("moveSpeed", AdventureUtil.parsed(sender.tl("walking")), speed, matchPlayer.getName());
             }
         }
         if (!foundUser) {

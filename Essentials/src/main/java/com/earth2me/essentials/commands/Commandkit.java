@@ -44,7 +44,7 @@ public class Commandkit extends EssentialsCommand {
             for (final String kitName : args[0].toLowerCase(Locale.ENGLISH).split(",")) {
                 new Kit(kitName, ess).expandItems(userTo);
 
-                sender.sendTl("kitGiveTo", kitName, userTo.getDisplayName());
+                sender.sendTl("kitGiveTo", kitName, userTo.getName());
                 userTo.sendTl("kitReceive", kitName);
             }
         }
@@ -80,7 +80,7 @@ public class Commandkit extends EssentialsCommand {
                 kit.chargeUser(userTo);
 
                 if (!userFrom.equals(userTo)) {
-                    userFrom.sendTl("kitGiveTo", kit.getName(), userTo.getDisplayName());
+                    userFrom.sendTl("kitGiveTo", kit.getName(), userTo.getName());
                 }
 
                 userTo.sendTl("kitReceive", kit.getName());
