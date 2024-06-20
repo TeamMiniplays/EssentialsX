@@ -76,7 +76,7 @@ public class Commandsell extends EssentialsCommand {
             final List<String> names = new ArrayList<>();
             for (final ItemStack stack : notSold) {
                 if (stack.getItemMeta() != null) { //This was already validated but IDE still freaks out
-                    names.add(stack.getItemMeta().getName());
+                    names.add(stack.getItemMeta().getDisplayName());
                 }
             }
             ess.showError(user.getSource(), new TranslatableException("cannotSellTheseNamedItems", String.join(ChatColor.RESET + ", ", names)), commandLabel);
