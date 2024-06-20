@@ -263,7 +263,7 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials {
 
     @Override
     public void onLoad() {
-        getLogger().log(Level.INFO, "Plugin Modified by Stefan for Miniplays");
+        getLogger().log(Level.INFO, "Plugin Modified by Stefan for Miniplays.de");
         try {
             // Vault registers their Essentials provider at low priority, so we have to use normal priority here
             Class.forName("net.milkbowl.vault.economy.Economy");
