@@ -12,6 +12,7 @@ import net.ess3.api.events.UserBalanceUpdateEvent;
 import org.bukkit.Server;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -89,7 +90,7 @@ public class Commandpay extends EssentialsLoopCommand {
                     user.sendTl("notAcceptingPay", player.getName());
                     return;
                 }
-                if (user.isPromptingPayConfirm() && !amount.equals(user.getConfirmingPayments().get(player))) { // checks if exists and if command needs to be repeated.
+                if ((amount.compareTo(BigDecimal.valueOf(1000000L)) >= 0) && !amount.equals(user.getConfirmingPayments().get(player))) { // checks if exists and if command needs to be repeated.
                     // Used to reset confirmations and inform to confirm when a new pay command has been inserted.
                     if (!informToConfirm.get()) {
                         // User hasnt been asked to confirm payment to this player, reset all confirmed payments and ask to confirm again.

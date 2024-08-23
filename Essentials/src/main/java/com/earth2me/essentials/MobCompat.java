@@ -1,27 +1,13 @@
 package com.earth2me.essentials;
 
+
 import com.earth2me.essentials.utils.EnumUtil;
 import com.earth2me.essentials.utils.RegistryUtil;
 import com.earth2me.essentials.utils.VersionUtil;
 import net.ess3.nms.refl.ReflUtil;
 import org.bukkit.Material;
 import org.bukkit.TreeSpecies;
-import org.bukkit.entity.Axolotl;
-import org.bukkit.entity.Boat;
-import org.bukkit.entity.Camel;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Fox;
-import org.bukkit.entity.Frog;
-import org.bukkit.entity.Llama;
-import org.bukkit.entity.MushroomCow;
-import org.bukkit.entity.Ocelot;
-import org.bukkit.entity.Panda;
-import org.bukkit.entity.Parrot;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.TropicalFish;
-import org.bukkit.entity.Villager;
-import org.bukkit.entity.Wolf;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.Method;
@@ -87,7 +73,10 @@ public final class MobCompat {
             return;
         }
         final Villager villager = (Villager) entity;
+        /*
+        Calls NonWorking Funktion
         villager.setProfession(profession.asEnum());
+         */
         if (VersionUtil.getServerBukkitVersion().isLowerThan(VersionUtil.v1_14_R01)) {
             final Class villagerCareer = ReflUtil.getClassCached("org.bukkit.entity.Villager$Career");
             final Method setCareer = ReflUtil.getMethodCached(Villager.class, "setCareer", villagerCareer);
@@ -294,10 +283,13 @@ public final class MobCompat {
             this.oldCareer = oldCareer;
             this.newProfession = newProfession;
         }
-
+        /*
+        ERROR
         private Villager.Profession asEnum() {
             return EnumUtil.valueOf(Villager.Profession.class, newProfession, oldProfession);
         }
+
+         */
     }
 
     public enum BoatVariant {

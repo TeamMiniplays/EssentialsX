@@ -1050,17 +1050,17 @@ public class Settings implements net.ess3.api.ISettings {
     }
 
     private boolean _changePlayerListName() {
-        return config.getBoolean("change-playerlist", false);
+        return false;
     }
 
     @Override
     public boolean changePlayerListName() {
-        return changePlayerListName;
+        return false;
     }
 
     @Override
     public boolean changeTabCompleteName() {
-        return config.getBoolean("change-tab-complete-name", false);
+        return false;
     }
 
     @Override
@@ -1069,11 +1069,11 @@ public class Settings implements net.ess3.api.ISettings {
     }
 
     private boolean _addPrefixSuffix() {
-        return config.getBoolean("add-prefix-suffix", false);
+        return false;
     }
 
     private boolean _isPrefixSuffixConfigured() {
-        return config.hasProperty("add-prefix-suffix");
+        return false;
     }
 
     @Override
@@ -1166,7 +1166,7 @@ public class Settings implements net.ess3.api.ISettings {
 
     @Override
     public boolean isAfkListName() {
-        return isAfkListName;
+        return false;
     }
 
     @Override

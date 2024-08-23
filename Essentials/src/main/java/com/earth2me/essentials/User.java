@@ -535,7 +535,7 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
             } else if (ess.getSettings().changePlayerListName()) {
                 final String name = getNick(ess.getSettings().isAddingPrefixInPlayerlist(), ess.getSettings().isAddingSuffixInPlayerlist());
                 try {
-                    this.getBase().setPlayerListName(name);
+                    //this.getBase().setPlayerListName(name);
                 } catch (final IllegalArgumentException e) {
                     if (ess.getSettings().isDebug()) {
                         ess.getLogger().log(Level.INFO, "Playerlist for " + name + " was not updated. Name clashed with another online player.");
@@ -548,7 +548,7 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
     @Override
     public String getDisplayName() {
         //noinspection ConstantConditions
-        return super.getBase().getDisplayName() == null || (ess.getSettings().hideDisplayNameInVanish() && isHidden()) ? super.getBase().getName() : super.getBase().getDisplayName();
+        return super.getBase().getDisplayName() == null ? super.getBase().getName() : super.getBase().getDisplayName();
     }
 
     @Override
@@ -676,9 +676,9 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
         if (ess.getSettings().isAfkListName()) {
             if (isAfk()) {
                 final String afkName = ess.getSettings().getAfkListName().replace("{PLAYER}", getName()).replace("{USERNAME}", getName());
-                getBase().setPlayerListName(afkName);
+                //getBase().setPlayerListName(afkName);
             } else {
-                getBase().setPlayerListName(null);
+                //getBase().setPlayerListName(null);
                 setDisplayNick();
             }
         }
