@@ -65,7 +65,6 @@ import java.lang.management.ManagementFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -609,7 +608,7 @@ public class EssentialsPlayerListener implements Listener, FakeAccessor {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent event) {
-        final String cmd = event.getMessage().toLowerCase(Locale.ENGLISH).split(" ")[0].replace("/", "").toLowerCase(Locale.ENGLISH);
+        final String cmd = event.getMessage().split(" ")[0].replace("/", "").toLowerCase(Locale.ENGLISH);
         final int argStartIndex = event.getMessage().indexOf(" ");
         final String args = argStartIndex == -1 ? "" // No arguments present
                 : event.getMessage().substring(argStartIndex); // arguments start at argStartIndex; substring from there.
@@ -632,7 +631,7 @@ public class EssentialsPlayerListener implements Listener, FakeAccessor {
 
     public void handlePlayerCommandPreprocess(final PlayerCommandPreprocessEvent event, final String effectiveCommand) {
         final Player player = event.getPlayer();
-        final String cmd = effectiveCommand.toLowerCase(Locale.ENGLISH).split(" ")[0].replace("/", "").toLowerCase(Locale.ENGLISH);
+        final String cmd = effectiveCommand.split(" ")[0].replace("/", "").toLowerCase(Locale.ENGLISH);
         final PluginCommand pluginCommand = ess.getServer().getPluginCommand(cmd);
 
         if (ess.getSettings().getSocialSpyCommands().contains(cmd) || ess.getSettings().getSocialSpyCommands().contains("*")) {
@@ -705,21 +704,17 @@ public class EssentialsPlayerListener implements Listener, FakeAccessor {
             // If so, no need to check for (and write) new ones.
             boolean cooldownFound = false;
 
-            // Iterate over a copy of getCommandCooldowns in case of concurrent modifications
-            for (final Entry<Pattern, Long> entry : new HashMap<>(user.getCommandCooldowns()).entrySet()) {
+            for (final Entry<Pattern, Long> entry : user.getCommandCooldowns().entrySet()) {
                 // Remove any expired cooldowns
                 if (entry.getValue() <= System.currentTimeMillis()) {
                     user.clearCommandCooldown(entry.getKey());
                     // Don't break in case there are other command cooldowns left to clear.
                 } else if (entry.getKey().matcher(fullCommand).matches()) {
                     // User's current cooldown hasn't expired, inform and terminate cooldown code.
-                    if (entry.getValue() > System.currentTimeMillis()) {
-                        final String commandCooldownTime = DateUtil.formatDateDiff(entry.getValue());
-                        user.sendTl("commandCooldown", commandCooldownTime);
-                        cooldownFound = true;
-                        event.setCancelled(true);
-                        break;
-                    }
+                    final String commandCooldownTime = DateUtil.formatDateDiff(entry.getValue());
+                    user.sendTl("commandCooldown", commandCooldownTime);
+                    cooldownFound = true;
+                    event.setCancelled(true);
                 }
             }
 

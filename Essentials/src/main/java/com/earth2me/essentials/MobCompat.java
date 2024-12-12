@@ -1,13 +1,28 @@
 package com.earth2me.essentials;
 
-
 import com.earth2me.essentials.utils.EnumUtil;
 import com.earth2me.essentials.utils.RegistryUtil;
 import com.earth2me.essentials.utils.VersionUtil;
 import net.ess3.nms.refl.ReflUtil;
 import org.bukkit.Material;
 import org.bukkit.TreeSpecies;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Axolotl;
+import org.bukkit.entity.Boat;
+import org.bukkit.entity.Camel;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Fox;
+import org.bukkit.entity.Frog;
+import org.bukkit.entity.Llama;
+import org.bukkit.entity.MushroomCow;
+import org.bukkit.entity.Ocelot;
+import org.bukkit.entity.Panda;
+import org.bukkit.entity.Parrot;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Salmon;
+import org.bukkit.entity.TropicalFish;
+import org.bukkit.entity.Villager;
+import org.bukkit.entity.Wolf;
 import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.Method;
@@ -34,6 +49,7 @@ public final class MobCompat {
     public static final EntityType GOAT = getEntityType("GOAT");
     public static final EntityType FROG = getEntityType("FROG");
     public static final EntityType CAMEL = getEntityType("CAMEL");
+    public static final EntityType SALMON = getEntityType("SALMON");
 
     // Constants for mobs that have changed since earlier versions
     public static final EntityType CAT = getEntityType("CAT", "OCELOT");
@@ -47,6 +63,7 @@ public final class MobCompat {
     public static final EntityType SPAWNER_MINECART = getEntityType("SPAWNER_MINECART", "MINECART_MOB_SPAWNER");
     public static final EntityType END_CRYSTAL = getEntityType("END_CRYSTAL", "ENDER_CRYSTAL");
     public static final EntityType FIREWORK_ROCKET = getEntityType("FIREWORK_ROCKET", "FIREWORK");
+    public static final EntityType OAK_BOAT = getEntityType("BOAT", "OAK_BOAT");
 
     private MobCompat() {
     }
@@ -73,10 +90,7 @@ public final class MobCompat {
             return;
         }
         final Villager villager = (Villager) entity;
-        /*
-        Calls NonWorking Funktion
         villager.setProfession(profession.asEnum());
-         */
         if (VersionUtil.getServerBukkitVersion().isLowerThan(VersionUtil.v1_14_R01)) {
             final Class villagerCareer = ReflUtil.getClassCached("org.bukkit.entity.Villager$Career");
             final Method setCareer = ReflUtil.getMethodCached(Villager.class, "setCareer", villagerCareer);
@@ -183,7 +197,7 @@ public final class MobCompat {
     }
 
     public static void setBoatVariant(final Entity entity, final BoatVariant variant) {
-        if (VersionUtil.getServerBukkitVersion().isLowerThan(VersionUtil.v1_9_R01)) {
+        if (VersionUtil.getServerBukkitVersion().isHigherThanOrEqualTo(VersionUtil.v1_21_3_R01) || VersionUtil.getServerBukkitVersion().isLowerThan(VersionUtil.v1_9_R01)) {
             return;
         }
         final Boat boat;
@@ -196,6 +210,7 @@ public final class MobCompat {
             //noinspection deprecation
             boat.setWoodType(TreeSpecies.valueOf(variant.getTreeSpecies()));
         } else {
+            //noinspection deprecation
             boat.setBoatType(Boat.Type.valueOf(variant.getBoatType()));
         }
     }
@@ -222,6 +237,16 @@ public final class MobCompat {
             final Wolf wolf = (Wolf) entity;
             //noinspection DataFlowIssue
             wolf.setVariant(RegistryUtil.valueOf(Wolf.Variant.class, variant));
+        }
+    }
+
+    public static void setSalmonSize(Entity spawned, String s) {
+        if (VersionUtil.getServerBukkitVersion().isLowerThan(VersionUtil.v1_21_3_R01)) {
+            return;
+        }
+
+        if (spawned instanceof org.bukkit.entity.Salmon) {
+            ((Salmon) spawned).setVariant(Salmon.Variant.valueOf(s));
         }
     }
 
@@ -283,13 +308,10 @@ public final class MobCompat {
             this.oldCareer = oldCareer;
             this.newProfession = newProfession;
         }
-        /*
-        ERROR
+
         private Villager.Profession asEnum() {
             return RegistryUtil.valueOf(Villager.Profession.class, newProfession, oldProfession);
         }
-
-         */
     }
 
     public enum BoatVariant {

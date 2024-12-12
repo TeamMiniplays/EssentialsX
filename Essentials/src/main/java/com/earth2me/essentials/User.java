@@ -247,9 +247,9 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
             return;
         }
         setMoney(getMoney().add(value), cause);
-        sendTl("addedToAccount", NumberUtil.displayCurrency(value, ess));
+        sendTl("addedToAccount", AdventureUtil.parsed(NumberUtil.displayCurrency(value, ess)));
         if (initiator != null) {
-            initiator.sendTl("addedToOthersAccount", NumberUtil.displayCurrency(value, ess), getName(), NumberUtil.displayCurrency(getMoney(), ess));
+            initiator.sendTl("addedToOthersAccount", AdventureUtil.parsed(NumberUtil.displayCurrency(value, ess)), getDisplayName(), AdventureUtil.parsed(NumberUtil.displayCurrency(getMoney(), ess)));
         }
     }
 
@@ -266,12 +266,12 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
         if (canAfford(value)) {
             setMoney(getMoney().subtract(value), cause);
             reciever.setMoney(reciever.getMoney().add(value), cause);
-            sendTl("moneySentTo", NumberUtil.displayCurrency(value, ess), reciever.getName());
-            reciever.sendTl("moneyRecievedFrom", NumberUtil.displayCurrency(value, ess), getName());
+            sendTl("moneySentTo", AdventureUtil.parsed(NumberUtil.displayCurrency(value, ess)), reciever.getDisplayName());
+            reciever.sendTl("moneyRecievedFrom", AdventureUtil.parsed(NumberUtil.displayCurrency(value, ess)), getDisplayName());
             final TransactionEvent transactionEvent = new TransactionEvent(this.getSource(), reciever, value);
             ess.getServer().getPluginManager().callEvent(transactionEvent);
         } else {
-            throw new ChargeException("notEnoughMoney", NumberUtil.displayCurrency(value, ess));
+            throw new ChargeException("notEnoughMoney", AdventureUtil.parsed(NumberUtil.displayCurrency(value, ess)));
         }
     }
 
@@ -294,9 +294,9 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
         } catch (final MaxMoneyException ex) {
             ess.getLogger().log(Level.WARNING, "Invalid call to takeMoney, total balance can't be more than the max-money limit.", ex);
         }
-        sendTl("takenFromAccount", NumberUtil.displayCurrency(value, ess));
+        sendTl("takenFromAccount", AdventureUtil.parsed(NumberUtil.displayCurrency(value, ess)));
         if (initiator != null) {
-            initiator.sendTl("takenFromOthersAccount", NumberUtil.displayCurrency(value, ess), getName(), NumberUtil.displayCurrency(getMoney(), ess));
+            initiator.sendTl("takenFromOthersAccount", AdventureUtil.parsed(NumberUtil.displayCurrency(value, ess)), getDisplayName(), AdventureUtil.parsed(NumberUtil.displayCurrency(getMoney(), ess)));
         }
     }
 
@@ -408,7 +408,7 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
         }
         teleportRequestQueue.remove(playerUsername);
         if (inform) {
-            sendTl("requestTimedOutFrom", ess.getUser(request.getRequesterUuid()).getName());
+            sendTl("requestTimedOutFrom", ess.getUser(request.getRequesterUuid()).getDisplayName());
         }
         return null;
     }
@@ -442,7 +442,7 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
                 }
             } else {
                 if (inform) {
-                    sendTl("requestTimedOutFrom", ess.getUser(request.getRequesterUuid()).getName());
+                    sendTl("requestTimedOutFrom", ess.getUser(request.getRequesterUuid()).getDisplayName());
                 }
                 teleportRequestQueue.remove(key);
             }
@@ -535,7 +535,7 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
             } else if (ess.getSettings().changePlayerListName()) {
                 final String name = getNick(ess.getSettings().isAddingPrefixInPlayerlist(), ess.getSettings().isAddingSuffixInPlayerlist());
                 try {
-                    //this.getBase().setPlayerListName(name);
+                    this.getBase().setPlayerListName(name);
                 } catch (final IllegalArgumentException e) {
                     if (ess.getSettings().isDebug()) {
                         ess.getLogger().log(Level.INFO, "Playerlist for " + name + " was not updated. Name clashed with another online player.");
@@ -548,7 +548,7 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
     @Override
     public String getDisplayName() {
         //noinspection ConstantConditions
-        return super.getBase().getDisplayName() == null ? super.getBase().getName() : super.getBase().getDisplayName();
+        return super.getBase().getDisplayName() == null || (ess.getSettings().hideDisplayNameInVanish() && isHidden()) ? super.getBase().getName() : super.getBase().getDisplayName();
     }
 
     @Override
@@ -675,10 +675,10 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
     private void updateAfkListName() {
         if (ess.getSettings().isAfkListName()) {
             if (isAfk()) {
-                final String afkName = ess.getSettings().getAfkListName().replace("{PLAYER}", getName()).replace("{USERNAME}", getName());
-                //getBase().setPlayerListName(afkName);
+                final String afkName = ess.getSettings().getAfkListName().replace("{PLAYER}", getDisplayName()).replace("{USERNAME}", getName());
+                getBase().setPlayerListName(afkName);
             } else {
-                //getBase().setPlayerListName(null);
+                getBase().setPlayerListName(null);
                 setDisplayNick();
             }
         }
@@ -805,9 +805,9 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
             if (broadcast && !isHidden() && !isAfk()) {
                 setDisplayNick();
                 if (ess.getSettings().broadcastAfkMessage()) {
-                    ess.broadcastTl(this, u -> u == this, "userIsNotAway", getName());
+                    ess.broadcastTl(this, u -> u == this, "userIsNotAway", getDisplayName());
                 }
-                sendTl("userIsNotAwaySelf", getName());
+                sendTl("userIsNotAwaySelf", getDisplayName());
             }
         }
         lastActivity = System.currentTimeMillis();
@@ -860,9 +860,9 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
             if (isAfk() && !isHidden()) {
                 setDisplayNick();
                 if (ess.getSettings().broadcastAfkMessage()) {
-                    ess.broadcastTl(this, u -> u == this, "userIsAway", getName());
+                    ess.broadcastTl(this, u -> u == this, "userIsAway", getDisplayName());
                 }
-                sendTl("userIsAwaySelf", getName());
+                sendTl("userIsAwaySelf", getDisplayName());
             }
         }
     }
@@ -1108,7 +1108,7 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
 
     @Override
     public int compareTo(final User other) {
-        return FormatUtil.stripFormat(getName()).compareToIgnoreCase(FormatUtil.stripFormat(other.getName()));
+        return FormatUtil.stripFormat(getDisplayName()).compareToIgnoreCase(FormatUtil.stripFormat(other.getDisplayName()));
     }
 
     @Override
