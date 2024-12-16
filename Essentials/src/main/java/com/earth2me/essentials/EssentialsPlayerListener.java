@@ -394,11 +394,13 @@ public class EssentialsPlayerListener implements Listener, FakeAccessor {
                 if (ess.getSettings().allowSilentJoinQuit() && (user.isAuthorized("essentials.silentjoin") || user.isAuthorized("essentials.silentjoin.vanish"))) {
                     if (user.isAuthorized("essentials.silentjoin.vanish")) {
                         user.setVanished(true);
+                        user.sendTl("vanishJoin");
                     }
                     effectiveMessage = null;
                 } else if (message == null || hideJoinQuitMessages()) {
                     effectiveMessage = null;
                 } else if (ess.getSettings().isCustomJoinMessage()) {
+                    /*
                     final String msg = (newUsername ? ess.getSettings().getCustomNewUsernameMessage() : ess.getSettings().getCustomJoinMessage())
                         .replace("{PLAYER}", player.getDisplayName()).replace("{USERNAME}", player.getName())
                         .replace("{UNIQUE}", NumberFormat.getInstance().format(ess.getUsers().getUserCount()))
@@ -411,6 +413,8 @@ public class EssentialsPlayerListener implements Listener, FakeAccessor {
                         ess.getServer().broadcastMessage(msg);
                     }
                     effectiveMessage = msg.isEmpty() ? null : msg;
+                     */
+                    effectiveMessage = null;
                 } else if (ess.getSettings().allowSilentJoinQuit()) {
                     ess.getServer().broadcastMessage(message);
                     effectiveMessage = message;
@@ -420,6 +424,7 @@ public class EssentialsPlayerListener implements Listener, FakeAccessor {
 
                 ess.runTaskAsynchronously(() -> ess.getServer().getPluginManager().callEvent(new AsyncUserDataLoadEvent(user, effectiveMessage)));
 
+                /*
                 if (ess.getSettings().getMotdDelay() >= 0) {
                     final int motdDelay = ess.getSettings().getMotdDelay() / 50;
                     final DelayMotdTask motdTask = new DelayMotdTask(user);
@@ -429,11 +434,12 @@ public class EssentialsPlayerListener implements Listener, FakeAccessor {
                         motdTask.run();
                     }
                 }
+                 */
 
                 if (!ess.getSettings().isCommandDisabled("mail") && user.isAuthorized("essentials.mail")) {
                     if (user.getUnreadMailAmount() == 0) {
                         if (ess.getSettings().isNotifyNoNewMail()) {
-                            user.sendTl("noNewMail"); // Only notify if they want us to.
+                            //user.sendTl("noNewMail"); // Only notify if they want us to.
                         }
                     } else {
                         user.notifyOfMail();
@@ -443,7 +449,7 @@ public class EssentialsPlayerListener implements Listener, FakeAccessor {
                 if (user.isAuthorized("essentials.updatecheck")) {
                     ess.runTaskAsynchronously(() -> {
                         for (final Component component : ess.getUpdateChecker().getVersionMessages(false, false, user.getSource())) {
-                            user.sendComponent(component);
+                            //user.sendComponent(component);
                         }
                     });
                 }

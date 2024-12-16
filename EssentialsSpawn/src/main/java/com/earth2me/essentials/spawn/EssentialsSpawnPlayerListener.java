@@ -1,10 +1,7 @@
 package com.earth2me.essentials.spawn;
 
 import com.earth2me.essentials.Kit;
-import com.earth2me.essentials.OfflinePlayerStub;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.textreader.IText;
-import com.earth2me.essentials.textreader.KeywordReplacer;
 import com.earth2me.essentials.utils.VersionUtil;
 import net.ess3.api.IEssentials;
 import org.bukkit.Location;
@@ -13,15 +10,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static com.earth2me.essentials.I18n.tlLiteral;
 
 class EssentialsSpawnPlayerListener implements Listener {
     private static final Logger logger = EssentialsSpawn.getWrappedLogger();
@@ -83,51 +76,12 @@ class EssentialsSpawnPlayerListener implements Listener {
     private void delayedJoin(final Player player) {
         if (player.hasPlayedBefore()) {
             logger.log(Level.FINE, "Old player join");
-            final List<String> spawnOnJoinGroups = ess.getSettings().getSpawnOnJoinGroups();
-            if (!spawnOnJoinGroups.isEmpty()) {
-                final User user = ess.getUser(player);
-
-                if (ess.getSettings().isUserInSpawnOnJoinGroup(user) && !user.isAuthorized("essentials.spawn-on-join.exempt")) {
-                    ess.scheduleSyncDelayedTask(() -> {
-                        final Location spawn = spawns.getSpawn(user.getGroup());
-                        if (spawn == null) {
-                            return;
-                        }
-                        final CompletableFuture<Boolean> future = new CompletableFuture<>();
-                        future.exceptionally(e -> {
-                            ess.showError(user.getSource(), e, "spawn-on-join");
-                            return false;
-                        });
-                        user.getAsyncTeleport().nowUnsafe(spawn, TeleportCause.PLUGIN, future);
-                    });
-                }
-            }
-
             return;
         }
 
         final User user = ess.getUser(player);
 
-        final boolean spawnRandomly = tryRandomTeleport(user, ess.getSettings().getRandomSpawnLocation());
-
-        if (!spawnRandomly && !"none".equalsIgnoreCase(ess.getSettings().getNewbieSpawn())) {
-            ess.scheduleSyncDelayedTask(new NewPlayerTeleport(user), 1L);
-        }
-
         ess.scheduleSyncDelayedTask(() -> {
-            if (!user.getBase().isOnline()) {
-                return;
-            }
-
-            //This method allows for multiple line player announce messages using multiline yaml syntax #EasterEgg
-            if (ess.getSettings().getAnnounceNewPlayers()) {
-                final IText output = new KeywordReplacer(ess.getSettings().getAnnounceNewPlayerFormat(), user.getSource(), ess);
-
-                for (final String line : output.getLines()) {
-                    ess.broadcastMessage(user, line);
-                }
-            }
-
             final String kitName = ess.getSettings().getNewPlayerKit();
             if (!kitName.isEmpty()) {
                 try {
@@ -140,31 +94,6 @@ class EssentialsSpawnPlayerListener implements Listener {
 
             logger.log(Level.FINE, "New player join");
         }, 2L);
-    }
-
-    private class NewPlayerTeleport implements Runnable {
-        private final transient User user;
-
-        NewPlayerTeleport(final User user) {
-            this.user = user;
-        }
-
-        @Override
-        public void run() {
-            if (user.getBase() instanceof OfflinePlayerStub || !user.getBase().isOnline()) {
-                return;
-            }
-
-            final Location spawn = spawns.getSpawn(ess.getSettings().getNewbieSpawn());
-            if (spawn != null) {
-                final CompletableFuture<Boolean> future = new CompletableFuture<>();
-                future.exceptionally(e -> {
-                    logger.log(Level.WARNING, tlLiteral("teleportNewPlayerError"), e);
-                    return false;
-                });
-                user.getAsyncTeleport().now(spawn, false, TeleportCause.PLUGIN, future);
-            }
-        }
     }
 
     private boolean tryRandomTeleport(final User user, final String name) {

@@ -450,7 +450,7 @@ debug: false
 # For example, to set language to English, set locale to en, to use the file "messages_en.properties".
 # Don't forget to remove the # in front of the line.
 # For more information, visit https://essentialsx.net/wiki/Locale.html
-#locale: en
+locale: de
 
 # Should EssentialsX use player's language instead of the server's when sending messages?
 # This is useful if you want to use a different language for your server than for your players.
@@ -463,8 +463,8 @@ per-player-locale: false
 # Some messages may use custom colours, which will need to be edited in the appropriate message files.
 # For more information on customising messages, see https://essentialsx.net/wiki/Locale.html
 message-colors:
-  primary: '#ffaa00'
-  secondary: '#ff5555'
+  primary: '#AAAAAA'
+  secondary: '#55FFFF'
 
 # Turn off god mode when people leave the server.
 remove-god-on-disconnect: false
@@ -815,7 +815,7 @@ confirm-home-overwrite: false
 # You can control the values of items that are sold to the server by using the /setworth command.
 
 # Defines the balance with which new players begin. Defaults to 0.
-starting-balance: 0
+starting-balance: 500
 
 # Defines the cost to use the given commands PER USE.
 # Some commands like /repair have sub-costs, check the wiki for more information.
